@@ -663,8 +663,8 @@ def mostar():
  #sistema de inpementacao de produtos no estoque
     if request.method == "POST":
      selected_option = request.form['p']
-    if selected_option=='informatica':
-       categoria= "informatica"
+    if selected_option=='tempeiros':
+       categoria= "tempeiros"
        cursor.execute(f"INSERT INTO produtos (id,ncm,codigo,descricao,preco,categoria,quantidade) VALUES ('{id}','{ncm}','{codig}','{descricao}','{preco}','{categoria}','{quantidade}')")
        conn.commit()
           
@@ -676,17 +676,6 @@ def mostar():
       conn.commit()
           
       return "produto cadastrado com sucesso"
-    
-    elif selected_option== 'eletronicos':
-      categoria= "eletronicos"
-      cursor.execute(f"INSERT INTO produtos (id,ncm,codigo,descricao,preco,categoria,quantidade) VALUES ('{id}','{ncm}','{codig}','{descricao}','{preco}','{categoria}','{quantidade}')")
-      conn.commit()
-          
-      return "produto cadastrado com sucesso"
-  
-  
-
-
 
 #Funcao para buscar informacoes do produto pela descricao
 def buscar_produto(descricao_produto):
@@ -708,11 +697,7 @@ def buscar_produto(descricao_produto):
     finally:
         if connection:
             connection.close()
-
-    
-# Rota para exibir a página HTML com a tabela
-
-
+            
 # Rota para lidar com a busca do produto
 @app.route('/buscar_produto', methods=['POST'])
 def buscar():
