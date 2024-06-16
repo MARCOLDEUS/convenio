@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./static/convenio.css">
+</head>
+
+<body>
+    <div class="pesq_tab">
+        <div class="tab_carrinho">
+            <form action="/cadastro" method="post">
+                <button class="cad">cadastro</button>
+            </form>
+            <form action="/produtos_comprados" method="post">
+                <button class="comprados">produtos comprados</button>
+            </form>
+            <form action="/altera_p" method="post">
+                <button class="ca">delet/alterar</button>
+            </form>
+
+        </div>
+        
+    </div>
+    <div class="tab_pesquisa">
+        <h1>pesquisar produto</h1>
+        <form method="POST" action="/convenio">
+            <input type="text" id="nome_produto" name="nome_produto">
+            <button type="submit">Pesquisar</button>
+            <ul style="display: none;">
+                {% for produto in produto %}
+                <li class="prod">{{ produto.descricao}}</li>
+
+                {% endfor %}
+            </ul>
+            <div id="search-results"></div>
+
+        </form>
+        <h3>Informações do Produto:</h3>
+        <form method="POST" action="/adiciona_carrinho">
+            {% if produto_c %}
+
+            {% for p in produto_c %}
+            <h1>id:<input type="text" name="id" value={{ p[0] }} min="50"></h1>
+            <h1>codigo:<input type="text" name="codigo" value={{ p[1] }} min="50"></h1>
+            <h1>codigo ncm:<input type="text" name="ncm" value={{ p[2] }} min="50"></h1>
+            <h1>Nome: <input type="text" name="nome" value="{{ p[3] }}"></h1>
+            <h1>preco:<input type="text" name="preco" value={{ p[4] }}></h1>
+            <h1>categoria:<input type="text" name="categoria" value={{ p[5] }}></h1>
+            <!-- Adicione mais campos conforme necessário -->
+            {% endfor %}
+            {% endif %}
+            <input type="number" step="0.01" placeholder="quantidade..." min="0" max="100" name="quantidade">
+            <button name="a" value="carrinho">adicionar ao carrinho</button>
+        </form>
+
+
+    </div>
+    <div class="adi_pro">
+        <h2>produtos adicionados</h2>
+        <form action="/final" method="post">
+            <div class="produt_carrinho">
+                
+                <table border="1">
+                   
+                    <tr>
+                        <th>ID</th>
+                        <th>Código</th>
+                        <th>NCM</th>
+                        <th>Descrição</th>
+                        <th>Preço</th>
+                        <th>categoria</th>
+                        <th>Quantidade</th>
+                    </tr>
+                    {% for registro in registros %}
+                    <tr>
+                        <td>{{ registro[0] }}</td>
+                        <td>{{ registro[1] }}</td>
+                        <td>{{ registro[2] }}</td>
+                        <td>{{ registro[3] }}</td>
+                        <td>{{ registro[4] }}</td>
+                        <td>{{ registro[5] }}</td>
+                        <td>{{ registro[6] }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+               
+
+        
+
+            <button class="finalizar">finalizar compar</button>
+        </form>
+        <form action="/delet" method="post">
+            <button class="ca">deletar todos os produtos do carrinho</button>
+        </form>
+    </div>
+</div>
+    <div class="valor_tot">
+        <h1>Total do Preço dos Produtos</h1>
+        {% for quant in quants %}
+        <h1> R$ {{ quant[0] }}</h1 >
+        {% endfor %}
+
+    </div>
+
+
+
+
+
+</body>
+<script>
+    const searchBox = document.getElementById('nome_produto');
+    const searchResults = document.getElementById('search-results');
+
+    // Obtendo os itens de produtos do HTML
+    const productList = document.querySelectorAll('.prod');
+    const data = Array.from(productList).map(item => item.textContent);
+
+    // Função para atualizar os resultados de pesquisa com base no texto de entrada
+    function updateResults(input) {
+        searchResults.innerHTML = '';
+        const searchText = input.toLowerCase();
+
+        const filteredResults = data.filter(item => item.toLowerCase().includes(searchText));
+
+        filteredResults.forEach(item => {
+            const resultItem = document.createElement('div');
+            resultItem.classList.add('result-item');
+            resultItem.textContent = item;
+            resultItem.addEventListener('click', () => {
+                searchBox.value = item;
+                searchResults.innerHTML = '';
+            });
+            searchResults.appendChild(resultItem);
+        });
+    }
+
+    // Evento de entrada para atualizar os resultados à medida que o usuário digita
+    searchBox.addEventListener('input', () => {
+        const inputValue = searchBox.value;
+        if (inputValue.length > 0) {
+            updateResults(inputValue);
+        } else {
+            searchResults.innerHTML = '';
+        }
+    });
+</script>
+
+</html>

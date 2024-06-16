@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resultado da Pesquisa</title>
+</head>
+<body>
+    <h1>Resultado da Pesquisa</h1>
+    {% if produto %}
+        <p>Nome: {{ produto[1] }}</p>
+        <p>Descrição: {{ produto[2] }}</p>
+        <p>Preço: {{ produto[3] }}</p>
+        <form action="/adicionar_carrinho" method="post">
+            <input type="hidden" name="produto_id" value="{{ produto[0] }}">
+            <label for="quantidade">Quantidade:</label>
+            <input type="number" id="quantidade" name="quantidade" value="1" min="1">
+            <button type="submit">Adicionar ao Carrinho</button>
+        </form>
+    {% else %}
+        <p>Produto não encontrado.</p>
+    {% endif %}
+</body>
+</html>

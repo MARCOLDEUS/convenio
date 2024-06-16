@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>alterar</title>
+</head>
+<body>
+    <div>
+
+        <form method="POST" action="/ad">
+            <input type="text" id="nome_produto_dd" name="nome_produto_dd">
+            <button type="submit">Pesquisar</button>
+            <ul style="display: none;">
+                {% for row in rows %}
+                <li class="prod">{{ row[3]}}</li>
+    
+                {% endfor %}
+            </ul>
+            <div id="search-results"></div>
+
+        </form>
+        <h3>Informações do Produto:</h3>
+        <form method="POST" action="/ad_prod_dd">
+            {% if produtos_dd %}
+
+            {% for p in produtos_dd %}
+            <h1>id:<input type="text" name="id" value={{ p[0] }} min="50"></h1>
+            <h1>codigo:<input type="text" name="codigo" value={{ p[1] }} min="50"></h1>
+            <h1>codigo ncm:<input type="text" name="ncm" value={{ p[2] }} min="50"></h1>
+            <h1>Nome: <input type="text" name="nome" value="{{ p[3] }}"></h1>
+            <h1>preco:<input type="text" name="preco" value={{ p[4] }}></h1>
+            <!-- Adicione mais campos conforme necessário -->
+            {% endfor %}
+            {% endif %}
+            <input type="number" placeholder="quantidade..." min="0" name="quantidade">
+            <button name="a" value="carrinho">alterar produtos</button>
+        </form>
+        <form action="/alterar_dd" id="nome"  method="post">
+            <button class="btn-login">imprimir PDF</button>
+        </form>
+    </div>
+    <h1>Tabela do Banco de Dados</h1>
+    <div id="tabela">
+        <table border="1">
+            <tr>
+                <th>id</th>
+                <th>codigo</th>
+                <th>codigo ncm</th>
+                <th>nome</th>
+                <th>preco</th>
+                <th>categoria</th>
+                <th>quantidade</th>
+            </tr>
+            {% for row in rows %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td>{{ row[4] }}</td>
+                <td>{{ row[5] }}</td>
+                <td>{{ row[6] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+
+</body>
+<script>
+    const searchBox = document.getElementById('nome_produto_dd');
+    const searchResults = document.getElementById('search-results');
+
+    // Obtendo os itens de produtos do HTML
+    const productList = document.querySelectorAll('.prod');
+    const data = Array.from(productList).map(item => item.textContent);
+
+    // Função para atualizar os resultados de pesquisa com base no texto de entrada
+    function updateResults(input) {
+        searchResults.innerHTML = '';
+        const searchText = input.toLowerCase();
+
+        const filteredResults = data.filter(item => item.toLowerCase().includes(searchText));
+
+        filteredResults.forEach(item => {
+            const resultItem = document.createElement('div');
+            resultItem.classList.add('result-item');
+            resultItem.textContent = item;
+            resultItem.addEventListener('click', () => {
+                searchBox.value = item;
+                searchResults.innerHTML = '';
+            });
+            searchResults.appendChild(resultItem);
+        });
+    }
+
+    // Evento de entrada para atualizar os resultados à medida que o usuário digita
+    searchBox.addEventListener('input', () => {
+        const inputValue = searchBox.value;
+        if (inputValue.length > 0) {
+            updateResults(inputValue);
+        } else {
+            searchResults.innerHTML = '';
+        }
+    });
+</script>
+</html>

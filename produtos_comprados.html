@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/produtos_comprados_pdf" method="post">
+        <button class="ca">PDF produtos comprados</button>
+    </form>
+    <form action="/deletar_produtos_comprados" method="post">
+        <button class="ca">deletar produtos comprados</button>
+    </form>
+    <h1>Produtos Comprados</h1>
+    <table border="1">
+                   
+        <tr>
+            <th>ID</th>
+            <th>Código</th>
+            <th>NCM</th>
+            <th>Descrição</th>
+            <th>Preço</th>
+            <th>categoria</th>
+            <th>Quantidade</th>
+        </tr>
+        {% for produto in produtos %}
+            <tr>
+                <td>{{ produto[0] }}</td>
+                <td>{{ produto[1] }}</td>
+                <td>{{ produto[2] }}</td>
+                <td>{{ produto[3] }}</td>
+                <td>{{ produto[4] }}</td>
+                <td>{{ produto[5] }}</td>
+                <td>{{ produto[6] }}</td>
+
+            </tr>
+            {% endfor %}
+    </table>
+</body>
+</html>

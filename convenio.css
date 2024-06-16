@@ -1,0 +1,31 @@
+@charset "UTF-8";
+body{
+    margin:0;
+    font-family: noto sans-serif;
+    background-color: rgb(93, 168, 233);
+}
+
+.tab_pesquisa{
+    position: relative;
+    width: 45vw;
+    height: 70vh;
+    background: #ffffff;
+    top: -10vh;
+    left: 130vh;
+}
+.adi_pro{
+    position: relative;
+    width: 60vw;
+    height: 190vh;
+    background: #ffffff;
+    top: -75vh;
+    left: 0vh;
+}
+.valor_tot{
+    position: relative;
+    width: 45vw;
+    height: 30vh;
+    background: #e3ed5a;
+    top: -205vh;
+    left: 130vh;
+}

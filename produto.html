@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Detalhes do Produto</h1>
+    
+    {% if produto %}
+        <table border="1">
+            <tr>
+                <th>ID</th>
+                <th>Código</th>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Categoria</th>
+                <th>Quantidade</th>
+            </tr>
+            <tr>
+                <td>{{ produto.id }}</td>
+                <td>{{ produto.codigo }}</td>
+                <td>{{ produto.nome }}</td>
+                <td>{{ produto.preco }}</td>
+                <td>{{ produto.categoria }}</td>
+                <td>{{ produto.quantidade }}</td>
+            </tr>
+        </table>
+    {% else %}
+        <p>Produto não encontrado.</p>
+    {% endif %}
+
+    <!-- Adicione qualquer conteúdo adicional aqui, se necessário -->
+</body>
+</html>
